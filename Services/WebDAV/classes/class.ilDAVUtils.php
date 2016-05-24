@@ -60,5 +60,24 @@ class ilDAVUtils
 		return $this->pwd_instruction = (bool) !strlen($ilUser->getPasswd());
 	}
 	
+	/**
+	 * Static function removes Microsoft domain name from username
+	 */
+	public static function toUsernameWithoutDomain($username)
+	{
+		// Remove all characters including the last slash or the last backslash
+		// in the username
+		$pos = strrpos($username, '/');
+		$pos2 = strrpos($username, '\\');
+		if ($pos === false || $pos < $pos2)
+		{
+			$pos = $pos2;
+		}
+		if ($pos !== false)
+		{
+			$username = substr($username, $pos + 1);
+		}
+		return $username;
+	}
 }
 ?>
